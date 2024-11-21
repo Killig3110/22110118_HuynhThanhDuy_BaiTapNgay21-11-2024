@@ -1,4 +1,4 @@
-package com.ktragk.demospringsecurity.controller;
+package com.ktragk.demospringsecurity.restcontroller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -18,8 +18,8 @@ public class CustomersController {
 
     // Dữ liệu mẫu cho danh sách khách hàng
     final private List<Customer> customers = List.of(
-            Customer.builder().id("001").name("Nguyễn Hữu Trung").email("trunghspkt@gmail.com").build(),
-            Customer.builder().id("002").name("Hữu Trung").email("trunghuu@gmail.com").build()
+            Customer.builder().id("001").name("Huynh Thanh Duy").email("thanhdiute@gmail.com").build(),
+            Customer.builder().id("002").name("Thanh Duy").email("thanhdi@gmail.com").build()
     );
 
     // Endpoint không yêu cầu phân quyền
