@@ -21,38 +21,38 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private UserInfoRepository repository;
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new UserInfoService(repository);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService());
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/new").permitAll()
-                        .requestMatchers("/").permitAll()
-                        .requestMatchers("/customer/**").authenticated()
-                )
-                .formLogin(Customizer.withDefaults())
-                .build();
-    }
+//    @Autowired
+//    private UserInfoRepository repository;
+//
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        return new UserInfoService(repository);
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+//
+//    @Bean
+//    public AuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+//        authenticationProvider.setUserDetailsService(userDetailsService());
+//        authenticationProvider.setPasswordEncoder(passwordEncoder());
+//        return authenticationProvider;
+//    }
+//
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        return http
+//                .csrf(csrf -> csrf.disable())
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/user/new").permitAll()
+//                        .requestMatchers("/").permitAll()
+//                        .requestMatchers("/customer/**").authenticated()
+//                )
+//                .formLogin(Customizer.withDefaults())
+//                .build();
+//    }
 }
 
