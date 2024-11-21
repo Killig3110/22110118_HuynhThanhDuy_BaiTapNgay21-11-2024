@@ -1,40 +1,55 @@
-package com.ktragk.demospringsecurity.config;
+package com.ktragk.demospringsecurity.entities;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.ktragk.demospringsecurity.entities.UserInfo;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserInfoUserDetails implements UserDetails {
+@Data
+@Table(name = "users")
+@Entity
+public class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    private String name;
-    private String password;
-    private List<GrantedAuthority> authorities;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
+    private Integer id;
 
-    public UserInfoUserDetails(UserInfo userInfo) {
-        this.name = userInfo.getName();
-        this.password = userInfo.getPassword();
-        this.authorities = Arrays.stream(userInfo.getRoles().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-    }
+    @Column(nullable = false, columnDefinition = "nvarchar(50)")
+    private String fullName;
+
+    @Column(unique = true, length = 100, nullable = false)
+    private String email;
+
+    @Column(columnDefinition = "nvarchar(500)", nullable = false)
+    private String images;
+
+    @Column(nullable = false)
+    private String password;
+
+    @CreationTimestamp
+    @Column(updatable = false, name = "created_at")
+    private Date createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return List.of();
     }
 
     @Override
@@ -44,7 +59,7 @@ public class UserInfoUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override
